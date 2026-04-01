@@ -43,6 +43,7 @@ sudo chmod -R 755 /run/mysqld
 echo "▶️ Запуск MariaDB..."
 sudo systemctl enable --now mariadb
 sleep 3
+
 echo "🔐 Простая настройка MariaDB (root без пароля)..."
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '';" 2>/dev/null || true
 
@@ -64,16 +65,23 @@ EOF
 echo "✅ База данных создана!"
 
 # ================= Проект =================
+SRC_DIR="$PWD"
+TARGET_DIR="/var/www/web-magaz"
+
 echo "✅ Копирование сайта..."
-sudo rm -rf /var/www/web-magaz 2>/dev/null || true
-sudo mkdir -p /var/www/web-magaz
-sudo cp -r "$PWD"/* /var/www/web-magaz/
-cd .. && sudo rm -rf "$PWD"
+sudo rm -rf "$TARGET_DIR" 2>/dev/null || true
+sudo mkdir -p "$TARGET_DIR"
+sudo cp -r "$SRC_DIR"/* "$TARGET_DIR"/
+
+# Безопасное удаление исходной папки проекта
+if [ "$SRC_DIR" != "/" ]; then
+    sudo rm -rf "$SRC_DIR"
+fi
 
 echo "📁 Настройка прав проекта..."
-sudo chown -R www-data:www-data /var/www/web-magaz
-sudo find /var/www/web-magaz -type d -exec chmod 755 {} \;
-sudo find /var/www/web-magaz -type f -exec chmod 644 {} \;
+sudo chown -R www-data:www-data "$TARGET_DIR"
+sudo find "$TARGET_DIR" -type d -exec chmod 755 {} \;
+sudo find "$TARGET_DIR" -type f -exec chmod 644 {} \;
 
 # ================= Nginx =================
 echo "🌐 Настройка Nginx..."
@@ -94,7 +102,7 @@ sudo tee /etc/nginx/sites-available/webasyst > /dev/null <<EOF
 server {
     listen 80;
     server_name _;
-    root /var/www/web-magaz;
+    root $TARGET_DIR;
     index index.php index.html;
 
     location / {
