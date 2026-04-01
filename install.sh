@@ -84,7 +84,7 @@ echo "✅ База данных успешно создана!"
 echo ""
 echo "📂 Копирование файлов сайта в /var/www/web-magaz ..."
 sudo mkdir -p /var/www/web-magaz
-sudo cp -r * /var/www/web-magaz/ 2>/dev/null || true
+sudo cp -r "$PWD"/* /var/www/web-magaz/ && cd .. && sudo rm -rf "$PWD"
 
 echo "📁 Настройка прав доступа..."
 sudo chown -R www-data:www-data /var/www/web-magaz
