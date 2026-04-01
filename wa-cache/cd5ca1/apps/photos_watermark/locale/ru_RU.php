@@ -1,0 +1,51 @@
+<?php
+return array (
+  'meta' => 
+  array (
+    'Project-Id-Version' => 'photos/plugins/watermark',
+    'POT-Creation-Date' => '2012-07-13 20:45+0400',
+    'PO-Revision-Date' => '',
+    'Last-Translator' => '',
+    'Language-Team' => 'photos/plugins/watermark',
+    'MIME-Version' => '1.0',
+    'Content-Type' => 'text/plain; charset=utf-8',
+    'Content-Transfer-Encoding' => '8bit',
+    'Plural-Forms' => 
+    array (
+      'nplurals' => '3',
+      'plural' => 'return (((($n%10)==1)&&(($n%100)!=11))?(0):((((($n%10)>=2)&&(($n%10)<=4))&&((($n%100)<10)||(($n%100)>=20)))?(1):2));',
+    ),
+    'X-Poedit-SourceCharset' => 'utf-8',
+    'X-Poedit-Basepath' => '.',
+    'X-Poedit-SearchPath-0' => '.',
+    'X-Poedit-SearchPath-1' => '.',
+  ),
+  'messages' => 
+  array (
+    'Delete' => 'Удалить',
+    'Watermark image will be permanently deleted. Delete?' => 'Файл с изображением водяного знака будет удален с сервера. Удалить?',
+    'Opacity' => 'Прозрачность',
+    '0 for full transparency, 1 for no transparency' => '0 соответствует полной прозрачности, 1 — полной непрозрачности',
+    'Text' => 'Текст',
+    'Text size' => 'Размер шрифта',
+    'Small' => 'Маленький',
+    'Medium' => 'Средний',
+    'Large' => 'Большой',
+    'Text color' => 'Цвет текста',
+    'Color value in hex format, e.g. #FFFFFF' => 'Значение цвета в шестнадцатиричном формате, например, #FFFFFF',
+    'Text align' => 'Положение текста',
+    'Top Left' => 'Верхний левый угол',
+    'Top Right' => 'Верхний правый угол',
+    'Bottom Left' => 'Нижний левый угол',
+    'Bottom Right' => 'Нижний правый угол',
+    'Text orientation' => 'Направление текста',
+    'Horizontal' => 'Горизонтальный',
+    'Vertical (recommended)' => 'Вертикальный (рекомендуется)',
+    'Image' => 'Изображение',
+    'Image align' => 'Положение наложенного изображения',
+    'Watermark' => 'Водяной знак',
+    'Applies watermark text or image on uploaded photos' => 'Накладывает водяной знак в виде изображения или текста на загружаемые фотографии',
+    'File could not be saved due to the insufficient file write permissions for the %s folder.' => 'Недостаточно прав для сохранения файла на сервере в папке %s',
+    'Failed to upload file.' => 'Не удалось загрузить файл.',
+  ),
+);

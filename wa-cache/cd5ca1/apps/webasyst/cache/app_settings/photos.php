@@ -1,0 +1,21 @@
+<?php
+return array (
+  0 => 
+  array (
+    'app_id' => 'photos',
+    'name' => 'update_time',
+    'value' => '1530607219',
+  ),
+  1 => 
+  array (
+    'app_id' => 'photos.comments',
+    'name' => 'update_time',
+    'value' => '1348828186',
+  ),
+  2 => 
+  array (
+    'app_id' => 'photos.publicgallery',
+    'name' => 'update_time',
+    'value' => '1',
+  ),
+);

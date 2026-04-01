@@ -1,0 +1,22 @@
+<?php
+return array (
+  'boxberryShippingViewHelper' => 'wa-plugins/shipping/boxberry/lib/classes/boxberryShippingViewHelper.class.php',
+  'boxberryShippingApiManager' => 'wa-plugins/shipping/boxberry/lib/classes/boxberryShippingApiManager.class.php',
+  'boxberryShippingDraftPackage' => 'wa-plugins/shipping/boxberry/lib/classes/boxberryShippingDraftPackage.class.php',
+  'boxberryShippingHandbookCityRegions' => 'wa-plugins/shipping/boxberry/lib/classes/handbook/boxberryShippingHandbookCityRegions.class.php',
+  'boxberryShippingHandbookManager' => 'wa-plugins/shipping/boxberry/lib/classes/handbook/boxberryShippingHandbookManager.class.php',
+  'boxberryShippingHandbookPointsForParcels' => 'wa-plugins/shipping/boxberry/lib/classes/handbook/boxberryShippingHandbookPointsForParcels.class.php',
+  'boxberryShippingHandbookAvailablePoints' => 'wa-plugins/shipping/boxberry/lib/classes/handbook/boxberryShippingHandbookAvailablePoints.class.php',
+  'boxberryShippingHandbookCityZips' => 'wa-plugins/shipping/boxberry/lib/classes/handbook/boxberryShippingHandbookCityZips.class.php',
+  'boxberryShippingHandbookPointDescription' => 'wa-plugins/shipping/boxberry/lib/classes/handbook/boxberryShippingHandbookPointDescription.class.php',
+  'boxberryShippingCountriesAdapter' => 'wa-plugins/shipping/boxberry/lib/classes/boxberryShippingCountries.adapter.php',
+  'boxberryShippingCalculatePoints' => 'wa-plugins/shipping/boxberry/lib/classes/calculate/boxberryShippingCalculatePoints.class.php',
+  'boxberryShippingCalculateValidate' => 'wa-plugins/shipping/boxberry/lib/classes/calculate/boxberryShippingCalculateValidate.class.php',
+  'boxberryShippingCalculateHelper' => 'wa-plugins/shipping/boxberry/lib/classes/calculate/boxberryShippingCalculateHelper.class.php',
+  'boxberryShippingCalculateCourier' => 'wa-plugins/shipping/boxberry/lib/classes/calculate/boxberryShippingCalculateCourier.class.php',
+  'boxberryShippingCalculateInterface' => 'wa-plugins/shipping/boxberry/lib/classes/calculate/boxberryShippingCalculate.interface.php',
+  'boxberryShippingGetSettings' => 'wa-plugins/shipping/boxberry/lib/classes/boxberryShippingGetSettings.class.php',
+  'boxberryShippingSettingsRegionsValidateController' => 'wa-plugins/shipping/boxberry/lib/actions/settings/boxberryShippingSettingsRegionsValidate.controller.php',
+  'boxberryShippingSettingsActions' => 'wa-plugins/shipping/boxberry/lib/actions/settings/boxberryShippingSettings.actions.php',
+  'boxberryShippingSettingsCountriesValidateController' => 'wa-plugins/shipping/boxberry/lib/actions/settings/boxberryShippingSettingsCountriesValidate.controller.php',
+);

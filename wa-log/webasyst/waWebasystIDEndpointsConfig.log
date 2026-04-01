@@ -1,0 +1,49 @@
+
+2026-04-01 17:56:44 127.0.0.1
+7
+Curl error 7: Failed to connect to 127.0.0.1 port 8080 after 0 ms: Couldn't connect to server
+#0 /var/www/web-magaz/wa-system/file/waNet.class.php(543): waNet->handleCurlResponse()
+#1 /var/www/web-magaz/wa-system/file/waNet.class.php(181): waNet->runCurl()
+#2 /var/www/web-magaz/wa-system/waid/waWebasystIDEndpointsConfig.class.php(70): waNet->query()
+#3 /var/www/web-magaz/wa-system/waid/waWebasystIDEndpointsConfig.class.php(45): waWebasystIDEndpointsConfig->requestEndpoints()
+#4 /var/www/web-magaz/wa-system/waid/waWebasystIDConfig.class.php(159): waWebasystIDEndpointsConfig->getEndpoints()
+#5 /var/www/web-magaz/wa-system/waid/waWebasystIDConfig.class.php(22): waWebasystIDConfig->generateDefaultConfig()
+#6 /var/www/web-magaz/wa-system/waid/waWebasystIDClientManager.class.php(402): waWebasystIDConfig->__construct()
+#7 /var/www/web-magaz/wa-system/waid/waWebasystIDClientManager.class.php(414): waWebasystIDClientManager->getWebasystIDConfig()
+#8 /var/www/web-magaz/wa-system/waid/waWebasystIDClientManager.class.php(341): waWebasystIDClientManager->getWebasystIDUrlsProvider()
+#9 /var/www/web-magaz/wa-system/waid/waWebasystIDClientManager.class.php(105): waWebasystIDClientManager->getConnectUrl()
+#10 /var/www/web-magaz/wa-system/webasyst/lib/classes/webasystInstaller.class.php(142): waWebasystIDClientManager->connect()
+#11 /var/www/web-magaz/wa-system/webasyst/lib/classes/webasystInstaller.class.php(13): webasystInstaller->connectToWaid()
+#12 /var/www/web-magaz/wa-system/webasyst/lib/config/install.php(7): webasystInstaller->installAll()
+#13 /var/www/web-magaz/wa-system/config/waAppConfig.class.php(470): include('...')
+#14 /var/www/web-magaz/wa-system/config/waAppConfig.class.php(309): waAppConfig->install()
+#15 /var/www/web-magaz/wa-system/waSystem.class.php(102): waAppConfig->checkUpdates()
+#16 /var/www/web-magaz/wa-system/waSystem.class.php(1505): waSystem::getInstance()
+#17 /var/www/web-magaz/wa-system/webasyst/lib/models/waAppSettings.model.php(125): wa()
+#18 /var/www/web-magaz/wa-system/database/waModel.class.php(162): waAppSettingsModel->describe()
+#19 /var/www/web-magaz/wa-system/database/waModel.class.php(100): waModel->getFields()
+#20 /var/www/web-magaz/wa-system/database/waModel.class.php(79): waModel->getMetadata()
+#21 /var/www/web-magaz/wa-system/contact/waContact.class.php(67): waModel->__construct()
+#22 /var/www/web-magaz/wa-system/user/waUser.class.php(22): waContact->init()
+#23 /var/www/web-magaz/wa-system/user/waAuthUser.class.php(32): waUser->init()
+#24 /var/www/web-magaz/wa-system/user/waAuthUser.class.php(27): waAuthUser->init()
+#25 /var/www/web-magaz/wa-system/waSystem.class.php(251): waAuthUser->__construct()
+#26 /var/www/web-magaz/wa-system/waSystem.class.php(293): waSystem::getCommonFactory()
+#27 /var/www/web-magaz/wa-system/controller/waDispatch.class.php(115): waSystem->getUser()
+#28 /var/www/web-magaz/wa-system/controller/waDispatch.class.php(32): waDispatch->dispatchBackend()
+#29 /var/www/web-magaz/wa-system/waSystem.class.php(614): waDispatch->dispatch()
+#30 /var/www/web-magaz/index.php(7): waSystem->dispatch()
+#31 {main}
+
+2026-04-01 17:56:44 127.0.0.1
+array (
+  'url' => 'http://127.0.0.1:8080/download/3.0/config/endpoints/?app=waid',
+  'method' => 'waWebasystIDEndpointsConfig::requestEndpoints',
+  'debug' => 
+  array (
+    'headers' => 
+    array (
+    ),
+    'body' => NULL,
+  ),
+)

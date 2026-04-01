@@ -1,0 +1,407 @@
+
+2026-04-01 17:56:46 127.0.0.1
+500
+Error while decode JSON string: Syntax error
+#0 /var/www/web-magaz/wa-system/file/waNet.class.php(410): waUtils::jsonDecode()
+#1 /var/www/web-magaz/wa-system/file/waNet.class.php(206): waNet->decodeResponse()
+#2 /var/www/web-magaz/wa-system/file/waNet.class.php(198): waNet->onQueryComplete()
+#3 /var/www/web-magaz/wa-system/waid/waWebasystIDClientManager.class.php(105): waNet->query()
+#4 /var/www/web-magaz/wa-system/webasyst/lib/classes/webasystInstaller.class.php(142): waWebasystIDClientManager->connect()
+#5 /var/www/web-magaz/wa-system/webasyst/lib/classes/webasystInstaller.class.php(13): webasystInstaller->connectToWaid()
+#6 /var/www/web-magaz/wa-system/webasyst/lib/config/install.php(7): webasystInstaller->installAll()
+#7 /var/www/web-magaz/wa-system/config/waAppConfig.class.php(470): include('...')
+#8 /var/www/web-magaz/wa-system/config/waAppConfig.class.php(309): waAppConfig->install()
+#9 /var/www/web-magaz/wa-system/waSystem.class.php(102): waAppConfig->checkUpdates()
+#10 /var/www/web-magaz/wa-system/waSystem.class.php(1505): waSystem::getInstance()
+#11 /var/www/web-magaz/wa-system/webasyst/lib/models/waAppSettings.model.php(125): wa()
+#12 /var/www/web-magaz/wa-system/database/waModel.class.php(162): waAppSettingsModel->describe()
+#13 /var/www/web-magaz/wa-system/database/waModel.class.php(100): waModel->getFields()
+#14 /var/www/web-magaz/wa-system/database/waModel.class.php(79): waModel->getMetadata()
+#15 /var/www/web-magaz/wa-system/contact/waContact.class.php(67): waModel->__construct()
+#16 /var/www/web-magaz/wa-system/user/waUser.class.php(22): waContact->init()
+#17 /var/www/web-magaz/wa-system/user/waAuthUser.class.php(32): waUser->init()
+#18 /var/www/web-magaz/wa-system/user/waAuthUser.class.php(27): waAuthUser->init()
+#19 /var/www/web-magaz/wa-system/waSystem.class.php(251): waAuthUser->__construct()
+#20 /var/www/web-magaz/wa-system/waSystem.class.php(293): waSystem::getCommonFactory()
+#21 /var/www/web-magaz/wa-system/controller/waDispatch.class.php(115): waSystem->getUser()
+#22 /var/www/web-magaz/wa-system/controller/waDispatch.class.php(32): waDispatch->dispatchBackend()
+#23 /var/www/web-magaz/wa-system/waSystem.class.php(614): waDispatch->dispatch()
+#24 /var/www/web-magaz/index.php(7): waSystem->dispatch()
+#25 {main}
+
+2026-04-01 17:56:46 127.0.0.1
+array (
+  'method' => 'waWebasystIDClientManager::connect',
+  'debug' => 
+  array (
+    'headers' => 
+    array (
+      0 => 'HTTP/1.1 404 Not Found',
+      'http_code' => 404,
+      'Server' => 'nginx',
+      'Date' => 'Wed, 01 Apr 2026 17:56:45 GMT',
+      'Content-Type' => 'text/html; charset=utf-8',
+      'Transfer-Encoding' => 'chunked',
+      'Connection' => 'close',
+      'Vary' => 'Accept-Encoding',
+      'Cache-Control' => 'no-cache, must-revalidate',
+      'Expires' => 'Sat, 08 Jun 2011 07:15:13 GMT',
+      'Set-Cookie' => 'landing=%2Fid%2Foauth2%2Fconnect%3Fdomain%3D127.0.0.1%26hash%3D94b9827e9fed3652abee20ccc00873fb%26url%3Dhttp%253A%252F%252F127.0.0.1%252F; path=/; secure; HttpOnly; SameSite=None',
+    ),
+    'body' => '<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" xml:lang="en" lang="en">
+<head>
+            
+                                                                                                                    
+    
+        
+    
+
+    <!-- META -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>404. Страница не найдена</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <!-- OG -->
+    <meta property="og:url" content="https://updates.webasyst.com/id/oauth2/connect" />
+    <meta property="og:title" content="404. Страница не найдена" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+        
+    
+    <link href=\'//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700\' rel=\'stylesheet\' type=\'text/css\'>
+    <link href=\'/wa-apps/site/themes/_webasystcom2/fonts/stemtextfont/stemtextfont.css\' rel=\'stylesheet\' type=\'text/css\'>
+
+    <!-- CSS -->
+    <link href="/wa-apps/site/themes/_webasystcom2/webasystcom.css?v2022.05.24.70" rel="stylesheet" type="text/css" />
+    <link href="/wa-apps/site/themes/_webasystcom2/css/webasystcom.part.css?v2022.05.24.70" rel="stylesheet" type="text/css" />
+    
+
+                
+
+    <!--[if lt IE 9]>
+    <script>
+    document.createElement(\'header\');
+    document.createElement(\'nav\');
+    document.createElement(\'section\');
+    document.createElement(\'article\');
+    document.createElement(\'aside\');
+    document.createElement(\'footer\');
+    document.createElement(\'figure\');
+    document.createElement(\'hgroup\');
+    document.createElement(\'menu\');
+    document.createElement(\'main\');
+    </script>
+    <![endif]-->
+
+    <!-- JS -->
+    <script src="/wa-content/js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+    
+
+    
+
+<link rel="canonical" href="https://updates.webasyst.com/id/oauth2/connect" />
+
+
+
+
+    <meta name=\'yandex-verification\' content=\'50afe52adef47cb1\' />
+    <script>
+        var isAuth=false;
+        var isCustomer=false;
+    </script>
+
+    
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPZZBWJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <div id="globalnav" class="empty" style="display: none;"></div>
+
+    <header id="wanav">
+
+    
+                
+        
+
+
+    
+
+            
+                            
+        
+    
+        
+
+
+
+
+    <nav class="container">
+
+        <h4 id="logo">
+            <a href="https://www.webasyst.com/">
+                <span class="wa-logo-black">web</span><span class="wa-logo-a">a</span><span class="wa-logo-s1">s</span><span  class="wa-logo-y">y</span><span class="wa-logo-s2">s</span><span class="wa-logo-t">t</span>
+            </a>
+        </h4>
+
+        
+                        
+        <button id="globalnav-toggle" title="Все продукты Webasyst"></button>
+
+        <!-- core Webasyst site navigation -->
+        <ul class="mainnav ru">
+
+            
+
+            		    <li id="store"><a href="https://www.webasyst.com/store/">Приложения<span class="hidden-text"> и темы дизайна</span></a>
+                        </li>
+
+            <li id="platform"><a href="https://www.webasyst.com/platform/">Фреймворк</a></li>
+
+		    <li id="pricing"><a href="https://www.webasyst.com/pricing/">Тарифы</a></li>
+
+            <li id="blog"><a href="https://www.webasyst.com/blog/">Блог</a></li>
+
+            
+
+            <li id="support"><a href="https://support.webasyst.com/">Помощь</a></li>
+
+        </ul>
+
+        <!-- sign up / sign in -->
+        <ul class="mainnav actionnav">
+
+                            <li class="keyaction"><a href="https://www.webasyst.com/cloud/" class="button2 actionbutton yellow cloud">Регистрация</a></li>
+                <li><a href="https://www.webasyst.com/login/" class="small">Вход</a></li>
+
+            
+
+		</ul>
+
+		<div class="clear-both"></div>
+
+    </nav>
+
+</header>
+
+    
+    <main class="clear-both">
+        <style>
+    #wanav,
+    #ssnav { background: #cef !important; }
+    footer.globalfooter { margin-top: 250px; position: relative; z-index: 15; background: #fff; }
+    .wahubheader { display: none; }
+</style>
+
+<article class="clouds">
+    <div class="layer" id="cloud-layer-1"></div>
+    <div class="layer" id="cloud-layer-2"></div>
+    <div class="layer" id="cloud-layer-3"></div>
+    <div class="page-404">
+        <h1>404</h1>        <h3>Страница не найдена</h3>    </div>
+</article>
+
+<div class="clear-both"></div>
+<script>
+    ga(\'send\', \'event\', \'error\', \'error page view 404\', "https:\\/\\/updates.webasyst.com\\/id\\/oauth2\\/connect?domain=127.0.0.1&hash=94b9827e9fed3652abee20ccc00873fb&url=http%3A%2F%2F127.0.0.1%2F");
+</script>
+
+    </main>
+
+
+    <footer class="globalfooter">
+
+    <div class="container">
+
+        <div class="footer-block">
+            
+                
+                                    <p><strong>Webasyst</strong> — это система для создания сайтов (CMS) + корпоративный портал. Приложения Webasyst позволяют создать собственный сайт, блог, интернет-магазин и управлять бизнесом через интернет.</p>
+                
+            
+                            <p>
+                    <a href="http://feeds.feedburner.com/webasystcom/ru" title="RSS" rel="nofollow"><i class="icon16 rss"></i></a>
+                    <a href="http://www.facebook.com/Webasyst.RU" title="Webasyst.RU на Фейсбуке" rel="nofollow"><i class="icon16 facebook"></i></a>
+                    <a href="http://vk.com/webasyst_ru" title="Webasyst во Вконтакте" rel="nofollow"><i class="icon16 vk"></i></a>
+                    <a href="http://twitter.com/webasyst_ru" title="@webasyst_ru" rel="nofollow"><i class="icon16 twitter"></i></a>
+                    <a href="https://github.com/webasyst/webasyst-framework" title="GitHub" rel="nofollow"><i class="icon16 github"></i></a>
+                    <a href="https://vimeo.com/webasyst" title="Vimeo" rel="nofollow"><i class="icon16 vimeo"></i></a>
+                </p>
+            
+        </div>
+
+        <div class="footer-block">
+            Webasyst
+            <ul>
+                <li><a href="https://www.webasyst.com/">CMS + интранет</a></li>
+                <li><a href="https://www.webasyst.com/store/">Магазин Webasyst</a></li>
+                <li><a href="https://www.webasyst.com/platform/">PHP-фреймворк</a></li>
+                <li><a href="https://www.webasyst.com/pricing/">Тарифы в облаке</a></li>
+                <li><a href="https://support.webasyst.com/">Хаб поддержки</a></li>
+
+                                    <li><a href="https://developers.webasyst.com/forum/">Форум разработчиков</a></li>
+                                                    <li><a href="https://partners.webasyst.com/">Каталог экспертов</a></li>
+                
+            </ul>
+        </div>
+
+        <div class="footer-block">
+            Shop-Script и CRM
+            <ul>
+                                    <li><a href="https://www.shop-script.com/">Создать интернет-магазин</a></li>
+                    <li><a href="https://www.shop-script.com/how-to-open-an-online-store/">Как открыть интернет-магазин?</a></li>
+                    <li><a href="https://www.shop-script.com/platform/">Движок интернет-магазина</a></li>
+                    <li><a href="https://www.shop-script.com/themes/">Темы дизайна для Shop-Script</a></li>
+                    <li><a href="https://www.shop-script.com/turnkey/">Интернет-магазин под ключ</a></li>
+                    <li><a href="https://www.shop-script.com/help/">База знаний Shop-Script</a></li>
+                                <li><a href="https://www.webasyst.com/crm/">Webasyst CRM</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-block">
+            Компания            <ul>
+                <li><a href="https://www.webasyst.com/my/">Центр заказчика</a></li>
+                <li><a href="https://www.webasyst.com/platform/affiliate/" class="bold">Партнерам — 50%</a></li>
+                
+
+                <li><a href="https://www.webasyst.com/about/jobs/">Вакансии</a></li>
+
+                                <li><a href="https://www.webasyst.com/legal/">Документы</a></li>
+
+                <li><a href="https://www.webasyst.com/about/">О компании</a></li>
+                <li><a href="https://www.webasyst.com/blog/">Блог</a></li>
+
+                                    <li><a href="https://www.webasyst.com/custom-services/">Услуги</a></li>
+                            </ul>
+
+        </div>
+
+        
+        <div class="copyright">
+
+            <ul>
+                <li>&copy; 2026 Webasyst</li>
+                <li><a href="https://www.webasyst.com/about/">О компании</a></li>
+                <li><a href="https://www.webasyst.com/blog/">Блог</a></li>
+                <li><a href="https://www.webasyst.com/platform/affiliate/">Стать партнером</a></li>
+                <li><a href="https://www.webasyst.com/legal/terms/">Договор-оферта</a></li>
+                <li class="dropdown" id="region">
+                        <span class="hidden">Country:</span>
+    <a href="#" onClick="javascript: return false;"><i class="icon16 currentcountry usa"></i>United States</a>
+    <ul class="menu-v">
+
+        
+
+                                            
+                                                    
+                                        
+        <li><a href="https://www.webasyst.com/id/oauth2/connect" class="current" onClick="return false;"><i class="icon16 usa"></i>United States</a></li>
+        <li><a href="https://www.webasyst.com/ca/id/oauth2/connect"><i class="icon16 can"></i>Canada</a></li>
+        <li><a href="https://www.webasyst.com/id/oauth2/connect"><i class="icon16 gbr"></i>United Kingdom</a></li>
+        <li><a href="https://www.webasyst.com/au/id/oauth2/connect"><i class="icon16 aus"></i>Australia</a></li>
+        
+        <li><a href="https://www.webasyst.ru/id/oauth2/connect"><i class="icon16 rus"></i>Россия</a></li>
+        <li class="gray"><a href="https://www.webasyst.com/platform/resellers/"><i class="icon16 checkmark-bw"></i>Становитесь партнером!</a></li>
+    </ul>
+
+                </li>
+            </ul>
+
+            <aside class="poweredby">
+                <a href="https://www.webasyst.com/developers/docs/powered-by-webasyst/" class="dots" title="Сайт работает на основе приложений Сайт, Блог, Хаб"></a>
+            </aside>
+
+        </div>
+
+        <div class="clear-both"></div>
+
+        <p class="align-center hint squeezed" style="color: #bbb; line-height: 1.2em;"><span class="small">Мы получаем и обрабатываем персональные данные посетителей сайта в соответствии с <a href="https://www.webasyst.com/legal/personal/"><u>Политикой обработки персональных данных</u></a>. Отправка персональных данных с помощью любой страницы сайта подразумевает согласие со всеми пунктами Политики.</span></p>
+    </div>
+
+
+    <aside class="support-badge">
+        <div id="support-badge-inner" class="inner">
+            
+
+            
+                <a href="https://support.webasyst.com/" class="button2">Центр поддержки</a>
+
+                                    <p class="smaller">Инструкции, руководства и ответы на любые вопросы о <span class="nowrap">Webasyst</span>. Круглосуточно.</p>
+                
+            
+                            <div class="sales">
+                    <a href="https://www.webasyst.com/sales/" class="button2 yellow">Отдел продаж</a>
+                    <p class="smaller"><em>Пн—Вс 7:00—23:59 МСК</em></p>
+                </div>
+            
+                            <p class="hint">Для персональных запросов в службу поддержки используйте
+<a href="https://www.webasyst.com/my/requests/" class="nowrap">Центр заказчика Webasyst</a>.</p>
+            
+        </div>
+        <a href="#" class="inline-link toggler" id="support-badge-toggler" onclick="ga(\'send\', \'event\', \'support\', \'support badge click\');">
+            <b><i>Задать вопрос</i></b> <i class="icon16 toggle-arrow uarr"></i>
+
+            
+        </a>
+    </aside>
+
+
+</footer>
+
+
+<script type="text/javascript" src="/wa-apps/site/themes/_webasystcom2/js/jquery.easing.1.3.js?v2022.05.24.70"></script>
+<script type="text/javascript" src="/wa-apps/site/themes/_webasystcom2/js/jquery.inview.plugin.js?v2022.05.24.70"></script>
+<script type="text/javascript" src="/wa-apps/site/themes/_webasystcom2/js/jcarousellite.1.0.1.min.js?v2022.05.24.70"></script>
+<script src="/wa-apps/site/themes/_webasystcom2/webasystcom.js?v2022.05.24.70" type="text/javascript"></script>
+<link href="/wa-apps/site/themes/_webasystcom2/jcountdown/jcountdown.css?v2022.05.24.70" rel="stylesheet" type="text/css">
+<script src="/wa-apps/site/themes/_webasystcom2/jcountdown/jquery.jcountdown.min.js?v2022.05.24.70"></script>
+<script src="/wa-apps/site/themes/_webasystcom2/plugins/swipebox/jquery.swipebox.min.js?v2022.05.24.70"></script>
+<link rel="stylesheet" href="/wa-apps/site/themes/_webasystcom2/plugins/swipebox/css/swipebox.css?v2022.05.24.70" />
+<script type="text/javascript" src="/wa-content/js/jquery-plugins/jquery.retina.min.js?v4.0.3"></script>
+<script type="text/javascript">$(function(){ $.Retina && $(\'img\').retina(); });</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(\'#globalnav-toggle\').click(function(){
+            if ($(\'#globalnav\').hasClass(\'empty\'))
+            {
+                $(\'#globalnav\').html( renderGlobalSiteToggle( \'ru_RU\', \'https://www.webasyst.com/\', \'https://www.shop-script.com/\', \'https://www.webasyst.com/crm/\', \'https://developers.webasyst.com/\', \'https://partners.webasyst.com/\', 0 ) ).removeClass(\'empty\');
+                //$(\'#region\').clone().appendTo(\'#region_clone\');
+                $(\'#newpostindicator\').clone().appendTo(\'#bloglink\');
+            }
+            $(\'#globalnav\').slideToggle(200);
+            $(this).toggleClass(\'visible\');
+            renderMobileNegativeNav();
+            return false;
+        });
+    });
+</script>
+
+    
+        
+
+</body>
+
+</html>
+',
+  ),
+)
+
+2026-04-01 17:56:46 127.0.0.1
+Unable to connect to WAID in install.php
+Error code fail_500: Error while decode JSON string: Syntax error
+[
+  'status' => false,
+  'details' => [
+    'error_code' => 'fail_500',
+    'error_message' => 'Error while decode JSON string: Syntax error',
+  ],
+]
