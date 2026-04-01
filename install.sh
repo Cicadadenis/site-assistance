@@ -57,9 +57,17 @@ read -p "Хост (по умолчанию localhost): " DB_HOST
 DB_HOST=${DB_HOST:-localhost}
 
 sudo mysql -u root <<EOF
+-- Создаём базу
 CREATE DATABASE IF NOT EXISTS \`$DB_NAME\` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+-- Создаём пользователя для указанного хоста (например localhost)
 CREATE USER IF NOT EXISTS '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';
 GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'$DB_HOST';
+
+-- Создаём пользователя для IPv4 (127.0.0.1) — чтобы PHP точно мог подключиться
+CREATE USER IF NOT EXISTS '$DB_USER'@'127.0.0.1' IDENTIFIED BY '$DB_PASS';
+GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'127.0.0.1';
+
 FLUSH PRIVILEGES;
 EOF
 echo "✅ База данных создана!"
@@ -138,7 +146,7 @@ echo ""
 echo "🌍 Адрес вашего сайта: http://$MYIP"
 echo "✅ Нажми «Установить» и «Продолжить»"
 echo "✅ Заполни Базу данных MySQL:"
-echo "❇️ Сервер: $DB_HOST"
+echo "❇️ Сервер: 127.0.0.1"
 echo "❇️ Пользователь: $DB_USER"
 echo "❇️ Пароль: $DB_PASS"
 echo "❇️ Имя базы данных: $DB_NAME"
