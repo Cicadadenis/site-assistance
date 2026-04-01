@@ -77,6 +77,7 @@ echo "📁 Настройка прав проекта"
 sudo chown -R www-data:www-data /var/www/web-magaz
 sudo find /var/www/web-magaz -type d -exec chmod 755 {} \;
 sudo find /var/www/web-magaz -type f -exec chmod 644 {} \;
+echo "📁 Удаление Временных Файлов"
 cd  .. 
 rm -r web-magaz
 echo "🌐 Настройка Nginx..."
