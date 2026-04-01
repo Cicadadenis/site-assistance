@@ -29,7 +29,9 @@
   - iconv
   - json
   - gd или ImageMagick
-
+## Автоустановка
+    git clone https://github.com/Cicadadenis/site-assistance.git web-magaz && cd web-magaz && sudo ./install.sh
+    
 ## Установка
 
 1. Поместите проект в директорию локального веб-сервера.
