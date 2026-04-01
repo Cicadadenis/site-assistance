@@ -56,14 +56,11 @@ EOF
 echo "✅ База данных создана!"
 echo "✅ Установка Движка Сайта Ожидайте ..."
 mkdir /var/www/web-magaz
-cp -r * /var/www/web-magaz
+sudo cp -r "$PWD"/* /var/www/web-magaz/ && cd .. && sudo rm -rf "$PWD"
 echo "📁 Настройка прав проекта"
 sudo chown -R www-data:www-data /var/www/web-magaz
 sudo find /var/www/web-magaz -type d -exec chmod 755 {} \;
 sudo find /var/www/web-magaz -type f -exec chmod 644 {} \;
-echo "📁 Удаление Временных Файлов"
-cd ..
-rm -r web-magaz
 echo "🌐 Настройка Nginx..."
 sudo mkdir -p /etc/nginx/snippets
 sudo tee /etc/nginx/snippets/fastcgi-php.conf > /dev/null <<'EOF'
