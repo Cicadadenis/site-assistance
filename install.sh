@@ -1,62 +1,74 @@
 #!/bin/bash
-# =============================================
-# Максимально надёжный неинтерактивный скрипт LEMP + Webasyst
-# Исправлены проблемы с MariaDB (права, socket, запуск)
-# Ubuntu 24.04
-# =============================================
+# ========================================================
+#          🚀 УСТАНОВЩИК LEMP + Site-Assistence
+# ========================================================
+# Автоматическая установка:
+# • Nginx + PHP 8.3 + MariaDB
+# • Webasyst (Cicada Site Assistance)
+# • Полностью неинтерактивная (кроме ввода данных БД)
+# ========================================================
+# Автор: Cicada Denis
+# Версия: 2026
+# ========================================================
 
 set -e
 
 export DEBIAN_FRONTEND=noninteractive
 
+echo "========================================================"
+echo "   🚀 Начинаем установку LEMP + Site-Assistence"
+echo "========================================================"
+
 echo "🔄 Отключаем автоматические обновления..."
 sudo systemctl stop unattended-upgrades 2>/dev/null || true
 sudo systemctl disable --now unattended-upgrades 2>/dev/null || true
 
-echo "🗑️ Очистка блокировок..."
+echo "🗑️  Очистка блокировок apt..."
 sudo rm -f /var/lib/dpkg/lock* /var/cache/apt/archives/lock /var/lib/apt/lists/lock
 
 echo "🔧 Исправляем повреждённые пакеты..."
 sudo dpkg --configure -a || true
 sudo apt --fix-broken install -y || true
 
-echo "🛠️ Подготовка директорий MariaDB..."
+echo "🛠️  Подготовка директорий MariaDB..."
 sudo mkdir -p /etc/mysql
 sudo touch /etc/mysql/mariadb.cnf /etc/mysql/my.cnf
 
 echo "🔄 Обновление системы..."
-sudo apt update
-sudo apt upgrade -y
-sudo apt install git -y
-echo "📦 Полная очистка MariaDB..."
-sudo systemctl stop mariadb 2>/dev/null || true
-sudo apt purge -y mariadb* mysql* libmariadb* 2>/dev/null || true
-sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql /run/mysqld ~/.my.cnf 2>/dev/null || true
+sudo apt update && sudo apt upgrade -y
 
-echo "📦 Установка пакетов..."
+echo "📦 Установка необходимых пакетов..."
 sudo apt install -y nginx mariadb-server mariadb-client \
     php8.3 php8.3-fpm php8.3-mysql php8.3-curl php8.3-gd \
-    php8.3-mbstring php8.3-xml php8.3-zip php8.3-cli git unzip curl
+    php8.3-mbstring php8.3-xml php8.3-zip php8.3-cli \
+    git unzip curl
 
-echo "📝 Исправляем права MariaDB..."
+echo "📦 Полная очистка предыдущей установки MariaDB..."
+sudo systemctl stop mariadb 2>/dev/null || true
+sudo apt purge -y mariadb* mysql* libmariadb* 2>/dev/null || true
+sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql /run/mysqld ~/.my.cnf
+
+echo "📝 Исправляем права и структуру MariaDB..."
 sudo mkdir -p /var/lib/mysql /run/mysqld
 sudo chown -R mysql:mysql /var/lib/mysql /run/mysqld /etc/mysql
 sudo chmod -R 750 /var/lib/mysql
 sudo chmod -R 755 /run/mysqld
 
-echo "▶️ Запуск MariaDB..."
+echo "▶️  Запуск MariaDB..."
 sudo systemctl enable --now mariadb
-sleep 3
+sleep 4
 
-echo "🔐 Простая настройка MariaDB (root без пароля)..."
+echo "🔐 Настройка MariaDB (root без пароля)..."
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '';" 2>/dev/null || true
 
-echo "🗄️ Создание базы данных"
-read -p "Введите имя базы данных: " DB_NAME
-read -p "Введите имя пользователя БД: " DB_USER
-read -s -p "Введите пароль пользователя БД: " DB_PASS
+# ====================== БАЗА ДАННЫХ ======================
+echo ""
+echo "🗄️  Создание базы данных для Webasyst"
+read -p "   Введите имя базы данных: " DB_NAME
+read -p "   Введите имя пользователя БД: " DB_USER
+read -s -p "   Введите пароль пользователя БД: " DB_PASS
 echo
-read -p "Хост (по умолчанию localhost): " DB_HOST
+read -p "   Хост (по умолчанию localhost): " DB_HOST
 DB_HOST=${DB_HOST:-localhost}
 
 sudo mysql -u root <<EOF
@@ -66,22 +78,24 @@ GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'$DB_HOST';
 FLUSH PRIVILEGES;
 EOF
 
-echo "✅ База данных создана!"
-echo "✅ Установка Движка Сайта Ожидайте ..."
-mkdir /var/www/web-magaz
-cp -r *  /var/www/web-magaz
-echo "📁 Настройка прав проекта"
+echo "✅ База данных успешно создана!"
 
+# ====================== КОПИРОВАНИЕ ПРОЕКТА ======================
+echo ""
+echo "📂 Копирование файлов сайта в /var/www/web-magaz ..."
+sudo mkdir -p /var/www/web-magaz
+sudo cp -r * /var/www/web-magaz/ 2>/dev/null || true
 
-
+echo "📁 Настройка прав доступа..."
 sudo chown -R www-data:www-data /var/www/web-magaz
 sudo find /var/www/web-magaz -type d -exec chmod 755 {} \;
 sudo find /var/www/web-magaz -type f -exec chmod 644 {} \;
-echo "📁 Удаление Временных Файлов"
-cd  .. 
-rm -r web-magaz
-echo "🌐 Настройка Nginx..."
+
+# ====================== НАСТРОЙКА NGINX ======================
+echo "🌐 Настройка веб-сервера Nginx..."
+
 sudo mkdir -p /etc/nginx/snippets
+
 sudo tee /etc/nginx/snippets/fastcgi-php.conf > /dev/null <<'EOF'
 fastcgi_split_path_info ^(.+\.php)(/.+)$;
 try_files $fastcgi_script_name =404;
@@ -119,10 +133,22 @@ EOF
 sudo ln -sf /etc/nginx/sites-available/webasyst /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 
-echo "🔍 Проверка и перезапуск сервисов..."
-sudo nginx -t && sudo systemctl restart nginx
-sudo systemctl restart php8.3-fpm
+echo "🔍 Проверка конфигурации Nginx..."
+sudo nginx -t && sudo systemctl restart nginx php8.3-fpm
 
 echo ""
-echo "✅ Установка завершена!"
-echo "🌍 Проверьте: http://$(curl -s ifconfig.me || hostname -I | awk '{print \$1}')"
+echo "========================================================"
+echo "   🎉 УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!"
+echo "========================================================"
+echo ""
+echo "🌍 Адрес вашего сайта: http://$(curl -s ifconfig.me || hostname -I | awk '{print \$1}')"
+echo ""
+echo "📋 Данные для установки:"
+echo "   Сервер:          $DB_HOST"
+echo "   Имя базы данных: $DB_NAME"
+echo "   Пользователь:    $DB_USER"
+echo "   Пароль:          $DB_PASS"
+echo ""
+echo "✅ Откройте сайт в браузере и нажмите «Установить»"
+echo "✅ Заполните данные базы данных и нажмите «Подключиться»"
+echo "========================================================"
