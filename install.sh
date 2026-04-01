@@ -126,4 +126,3 @@ sudo systemctl restart php8.3-fpm
 echo ""
 echo "✅ Установка завершена!"
 echo "🌍 Проверьте: http://$(curl -s ifconfig.me || hostname -I | awk '{print \$1}')"
-echo "📌 Загрузите файлы Webasyst в папку $WEB_PATH и запустите установщик."
