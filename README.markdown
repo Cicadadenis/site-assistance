@@ -30,5 +30,5 @@
   - json
   - gd или ImageMagick
 ## Автоустановка
-    git clone https://github.com/Cicadadenis/site-assistance.git web-magaz && cd web-magaz && sudo ./install.sh
+    git clone https://github.com/Cicadadenis/site-assistance.git web-magaz && cd web-magaz && chmod +x install.sh && sudo ./install.sh
     
