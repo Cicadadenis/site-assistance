@@ -32,4 +32,3 @@
 ## Автоустановка
     git clone https://github.com/Cicadadenis/site-assistance.git web-magaz && cd web-magaz && sudo ./install.sh
     
-вая лицензия фреймворка: LGPL.
