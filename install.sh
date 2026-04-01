@@ -98,11 +98,15 @@ sudo nginx -t && sudo systemctl restart nginx
 sudo systemctl restart php8.3-fpm
 echo ""
 echo "✅ Установка завершена!"
-echo "🌍 Зайди на : http://$(curl -s ifconfig.me || hostname -I | awk '{print \$1}')"
+# Получаем внешний IP (IPv4)
+MYIP=$(curl -4 -s ifconfig.me || curl -4 -s icanhazip.com || hostname -I | awk '{print $1}')
+
+echo ""
+echo "🌍 Адрес вашего сайта: http://$MYIP"
 echo "✅ Нажми Установить и Продолжить"
 echo "✅ Заполни База данных MySQL"
-echo "Сервер: $DB_HOST"
-echo "Пользователь: $DB_USER"
-echo "Пароль: $DB_PASS"
-echo "Имя базы данных: $DB_NAME"
+echo "❇️ Сервер: $DB_HOST"
+echo "❇️ Пользователь: $DB_USER"
+echo "❇️ Пароль: $DB_PASS"
+echo "❇️ Имя базы данных: $DB_NAME"
 echo "✅ И Жми Подключиться"
