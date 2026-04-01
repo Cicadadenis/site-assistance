@@ -1,61 +1,92 @@
-# Webasyst #
+# Конструктор интернет-магазина на Webasyst
 
-Webasyst is an open-source PHP framework for fast development of web apps with a password-protected user backend and a publicly available website frontend.
-Distributed under the terms of LGPL license.
+Проект представляет собой локально разворачиваемый интернет-магазин на базе Webasyst и Shop-Script.
+Репозиторий используется как рабочая сборка для разработки, настройки витрины и доработки магазина.
 
-Website: http://www.webasyst.com
+## Основные изменения в проекте
 
-## System Requirements ##
+- страна по умолчанию: Украина
+- валюта по умолчанию: украинская гривна (UAH)
+- из стартовой украинской конфигурации удален RUB
+- витрина и промо-контент адаптированы под украинский рынок
 
-	* Web server
-		* e.g., Apache, nginx, or IIS
-		
-	* PHP 7.4+
- 
-	* PHP extensions
-		* spl
-		* mbstring
-		* iconv
-		* json
-		* gd or ImageMagick
+## Технологии
 
-	* MySQL 4.1+
+- PHP
+- Webasyst Framework
+- Shop-Script
+- MySQL или MariaDB
+- HTML, CSS, JavaScript
 
+## Системные требования
 
-## How to install Webasyst framework ##
+- PHP 7.4+
+- MySQL/MariaDB
+- Apache, Nginx, OpenServer, XAMPP или аналогичная локальная среда
+- PHP-расширения:
+  - mbstring
+  - mysqli
+  - iconv
+  - json
+  - gd или ImageMagick
 
-1. Copy the source code to your web server's `%PATH%` directory (e.g., *public_html/webasyst*).
+## Установка
 
-	git:
-	```
-	cd %PATH%
-	git clone git@github.com:webasyst/webasyst-framework.git
-	```
+1. Поместите проект в директорию локального веб-сервера.
+2. Создайте базу данных.
+3. При необходимости настройте подключение к базе через wa-config/db.php.
+4. Откройте проект в браузере:
 
-	SVN:
-	```
-	cd %PATH%
-	svn checkout http://svn.github.com/webasyst/webasyst-framework.git
-	```
+   http://localhost/webasyst/
 
-2. Enable the framework installation directory (`%PATH%`) for writing.
-	```
-	cd ..
-	chmod %PATH% 0775
-	
-	(or 0777 depending on your server configuration)
-	```
+   или:
 
-3. Create a new MySQL database for Webasyst.
+   http://127.0.0.1/имя-папки/
 
-4. Open the URL of the installation directory in a browser; e.g., *http://localhost/webasyst/*. This will start a web-based installation wizard.
+5. Пройдите шаги установщика.
+6. Откройте админку и проверьте настройки магазина, валют и витрины.
 
-5. Complete all steps of the installation wizard.
-    * On the database setup step, enter the credentials of the MySQL database created for Webasyst.
-    * On the first user setup step, enter any user name, password, and email address for your main Webasyst user (administrator).
-    * Sign into the user backend to complete the installation.
+## Полезные конфиги
 
-## How to update Webasyst framework ##
+- wa-config/config.php.example
+- wa-config/db.php.example
+- wa-config/apps.php.example
 
-1. Update framework files from a repository.
-2. Sign into your Webasyst user backend. This will automatically apply any required meta updates to the new framework version.
+Локальные рабочие конфиги и данные не рекомендуется загружать в GitHub.
+
+## Что не нужно коммитить
+
+- wa-data
+- wa-cache
+- wa-log
+- wa-config/config.php
+- wa-config/db.php
+
+## Структура проекта
+
+- wa-apps/shop — магазин
+- wa-system — ядро платформы
+- wa-config — конфигурация окружения
+- wa-content — статические файлы
+- wa-installer — установщик
+- wa-plugins — внешние интеграции
+
+## GitHub
+
+Базовая публикация проекта:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/USERNAME/REPOSITORY.git
+git push -u origin main
+```
+
+Перед push обязательно проверьте, что в индекс не попали локальные конфиги и служебные данные.
+
+## Лицензия
+
+Проект основан на Webasyst Framework.
+Базовая лицензия фреймворка: LGPL.
