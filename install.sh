@@ -67,6 +67,7 @@ FLUSH PRIVILEGES;
 EOF
 
 echo "✅ База данных создана!"
+echo "✅ Установка Движка Сайта Ожидайте ..."
 mkdir /var/www/web-magaz
 cp -r *  /var/www/web-magaz
 echo "📁 Настройка прав проекта"
