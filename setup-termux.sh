@@ -1,19 +1,15 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # =============================================
-# 🚀 LEMP + Webasyst (Termux Stable Version)
+# 🚀 LEMP + Webasyst (Termux)
+# Nginx + MariaDB + PHP-FPM
 # =============================================
 
 set -e
 
 PREFIX="/data/data/com.termux/files/usr"
-
 MYSQL_DATADIR="${PREFIX}/var/lib/mysql"
 MYSQL_SOCK="${PREFIX}/var/run/mysqld.sock"
-
-SITE_SRC="$HOME/site-assistance"
-TARGET_DIR="$HOME/web-magaz"
-
-PORT=8090   # ← авто-порт (можешь поменять)
+TARGET_PORT=8090
 
 echo "🔄 Обновление пакетов..."
 pkg update -y && pkg upgrade -y
@@ -21,64 +17,71 @@ pkg update -y && pkg upgrade -y
 echo "📦 Установка пакетов..."
 pkg install -y nginx mariadb php php-fpm git unzip curl
 
-# ================= CLEAN =================
-
-echo "🧹 Очистка процессов..."
+# =============================================
+# 🧹 Очистка процессов
+# =============================================
+echo "🧹 Очистка старых процессов..."
 pkill -9 nginx 2>/dev/null || true
 pkill -9 php-fpm 2>/dev/null || true
-pkill -9 mysqld 2>/dev/null || true
 pkill -9 mariadbd 2>/dev/null || true
+pkill -9 mysqld 2>/dev/null || true
+sleep 2
 
-sleep 3
+# =============================================
+# ⚙️ PHP CONFIG (conf.d)
+# =============================================
+echo "⚙️ Настройка PHP конфигурации..."
 
-# ================= MARIADB =================
+mkdir -p "${PREFIX}/etc/php/conf.d"
 
+cat > "${PREFIX}/etc/php/conf.d/custom.ini" <<EOF
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+display_errors = Off
+display_startup_errors = Off
+log_errors = On
+date.timezone = UTC
+EOF
+
+# =============================================
+# 🐘 MariaDB
+# =============================================
 echo "📦 Настройка MariaDB..."
 
 mkdir -p "${PREFIX}/var/run/mysqld"
 chmod 777 "${PREFIX}/var/run/mysqld"
 
 if [ ! -d "${MYSQL_DATADIR}/mysql" ]; then
-    echo "🛠 Инициализация БД..."
+    echo "🛠 Инициализация базы данных..."
     mysql_install_db --user=$(whoami) --datadir="${MYSQL_DATADIR}" || true
 fi
 
-mysqld --skip-grant-tables --skip-networking \
-  --user=$(whoami) \
-  --datadir="${MYSQL_DATADIR}" \
-  --socket="${MYSQL_SOCK}" &
+echo "▶️ Запуск MariaDB временно..."
+mysqld_safe --user=$(whoami) --datadir="${MYSQL_DATADIR}" --socket="${MYSQL_SOCK}" &
+sleep 8
 
-MYSQL_PID=$!
-sleep 6
-
-mariadb -u root --socket="${MYSQL_SOCK}" <<EOF
-UPDATE mysql.global_priv
-SET Priv = JSON_SET(
-    Priv,
-    '$.authentication_string', '',
-    '$.plugin', 'mysql_native_password'
-)
-WHERE User='root' AND Host='localhost';
-
+echo "🔐 Настройка root..."
+mariadb -u root <<EOF
+ALTER USER 'root'@'localhost' IDENTIFIED BY '';
 FLUSH PRIVILEGES;
 EOF
 
-kill $MYSQL_PID 2>/dev/null || true
 pkill -9 mysqld 2>/dev/null || true
 sleep 3
 
+echo "▶️ Запуск MariaDB в нормальном режиме..."
 mysqld_safe --user=$(whoami) --datadir="${MYSQL_DATADIR}" &
 sleep 6
 
-echo "✅ MariaDB готова"
+# =============================================
+# 🗄️ База данных Webasyst
+# =============================================
+echo "🗄️ Создание базы данных..."
 
-# ================= DATABASE =================
-
-read -p "DB name: " DB_NAME
-read -p "DB user: " DB_USER
-read -s -p "DB pass: " DB_PASS
+read -p "Введите имя базы данных: " DB_NAME
+read -p "Введите имя пользователя БД: " DB_USER
+read -s -p "Введите пароль пользователя БД: " DB_PASS
 echo
-read -p "Host (Enter = 127.0.0.1): " DB_HOST
+read -p "Хост (Enter = 127.0.0.1): " DB_HOST
 DB_HOST=${DB_HOST:-127.0.0.1}
 
 mariadb -u root <<EOF
@@ -88,47 +91,47 @@ GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'$DB_HOST';
 FLUSH PRIVILEGES;
 EOF
 
-echo "✅ База создана"
+echo "✅ База данных создана"
 
-# ================= PROJECT =================
+# =============================================
+# 📁 Проект
+# =============================================
+SRC_DIR="$PWD"
+TARGET_DIR="$HOME/web-magaz"
 
-echo "📁 Копирование сайта..."
-
-rm -rf "$TARGET_DIR"
+echo "📁 Копирование проекта..."
+rm -rf "$TARGET_DIR" 2>/dev/null || true
 mkdir -p "$TARGET_DIR"
+cp -a "$SRC_DIR"/. "$TARGET_DIR"/
 
-if [ -d "$SITE_SRC" ]; then
-    cp -a "$SITE_SRC"/. "$TARGET_DIR"/
-else
-    echo "❌ Папка сайта не найдена: $SITE_SRC"
-    exit 1
-fi
-
-echo "🔧 Права..."
 chown -R $(whoami) "$TARGET_DIR"
 chmod -R 755 "$TARGET_DIR"
 find "$TARGET_DIR" -type f -exec chmod 644 {} \;
 
-# ================= NGINX =================
-
+# =============================================
+# 🌐 Nginx
+# =============================================
 echo "🌐 Настройка Nginx..."
+
+mkdir -p "${PREFIX}/etc/nginx/snippets"
+
+cat > "${PREFIX}/etc/nginx/snippets/fastcgi-php.conf" <<EOF
+fastcgi_split_path_info ^(.+\.php)(/.+)$;
+try_files \$fastcgi_script_name =404;
+fastcgi_buffers 16 16k;
+fastcgi_buffer_size 32k;
+fastcgi_read_timeout 300;
+include fastcgi_params;
+fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+fastcgi_param PATH_INFO \$fastcgi_path_info;
+EOF
 
 mkdir -p "${PREFIX}/etc/nginx/sites-available"
 mkdir -p "${PREFIX}/etc/nginx/sites-enabled"
-mkdir -p "${PREFIX}/etc/nginx/snippets"
 
-# FastCGI config
-tee "${PREFIX}/etc/nginx/snippets/fastcgi-php.conf" > /dev/null <<'EOF'
-fastcgi_split_path_info ^(.+\.php)(/.+)$;
-try_files $fastcgi_script_name =404;
-include fastcgi_params;
-fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-EOF
-
-# Site config
-tee "${PREFIX}/etc/nginx/sites-available/webasyst" > /dev/null <<EOF
+cat > "${PREFIX}/etc/nginx/sites-available/webasyst" <<EOF
 server {
-    listen ${PORT};
+    listen ${TARGET_PORT};
     server_name _;
     root $TARGET_DIR;
     index index.php index.html;
@@ -148,36 +151,42 @@ server {
 }
 EOF
 
-ln -sf "${PREFIX}/etc/nginx/sites-available/webasyst" \
-       "${PREFIX}/etc/nginx/sites-enabled/default"
+ln -sf "${PREFIX}/etc/nginx/sites-available/webasyst" "${PREFIX}/etc/nginx/sites-enabled/default"
 
-# подключение sites-enabled
+# Подключаем sites-enabled
 if ! grep -q "sites-enabled" "${PREFIX}/etc/nginx/nginx.conf"; then
     sed -i '/http {/a \    include sites-enabled/*;' "${PREFIX}/etc/nginx/nginx.conf"
 fi
 
-# ⚠️ авто-исправление listen 8080 в nginx.conf
-sed -i "s/listen       8080;/listen       ${PORT};/g" "${PREFIX}/etc/nginx/nginx.conf"
+# Меняем основной порт nginx.conf если есть 8080
+sed -i "s/listen[[:space:]]\+8080;/listen ${TARGET_PORT};/g" "${PREFIX}/etc/nginx/nginx.conf" || true
 
 echo "🔍 Проверка nginx..."
 nginx -t
 
-# ================= START =================
+# =============================================
+# 🚀 Запуск сервисов
+# =============================================
+echo "🚀 Запуск сервисов..."
 
-echo "▶️ Запуск сервисов..."
+pkill nginx 2>/dev/null || true
+pkill php-fpm 2>/dev/null || true
 
 php-fpm -D
 sleep 2
 nginx
 
-echo "✅ Готово!"
-
-IP=$(curl -4 -s ifconfig.me 2>/dev/null || echo "127.0.0.1")
+# =============================================
+# 🌍 Информация
+# =============================================
+MYIP=$(curl -4 -s ifconfig.me 2>/dev/null || echo "127.0.0.1")
 
 echo ""
-echo "🌍 Сайт: http://$IP:$PORT"
+echo "✅ Установка завершена!"
+echo "🌍 Сайт: http://$MYIP:${TARGET_PORT}"
 echo ""
-echo "DB:"
+echo "Данные БД:"
+echo "Server: 127.0.0.1"
 echo "User: $DB_USER"
-echo "Pass: $DB_PASS"
-echo "DB:   $DB_NAME"
+echo "Password: $DB_PASS"
+echo "Database: $DB_NAME"
