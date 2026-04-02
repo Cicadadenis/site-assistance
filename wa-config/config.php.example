@@ -3,4 +3,5 @@ return array (
   'debug' => true,
 //  'backend_url' => 'admin', // default is 'webasyst'
   'mod_rewrite' => true,
+  'installer_in_developer_mode' => true,
 );
